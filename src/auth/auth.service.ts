@@ -26,7 +26,7 @@ export class AuthService {
     );
   }
 
-  public async validateUser(jwtPayload: JwtPayload ): Promise<User> {
+  public async validateUser(jwtPayload: JwtPayload): Promise<User> {
     const user = await this.usersModel.findOne({ _id: jwtPayload.userId });
 
     if (!user) {
@@ -36,8 +36,8 @@ export class AuthService {
     return user;
   }
 
-  private static jwtExractor(request: Request): string {
-    const authHeader = request.headers.get('authorization');
+  private static jwtExtractor(request: Request): string {
+    const authHeader = request.headers.get('Authorization');
 
     if (!authHeader) {
       throw new BadRequestException('Bad request.');
@@ -48,6 +48,6 @@ export class AuthService {
   }
 
   public returnJwtExtractor(): (request: Request) => string {
-    return AuthService.jwtExractor;
+    return AuthService.jwtExtractor;
   }
 }

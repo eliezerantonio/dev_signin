@@ -5,7 +5,7 @@ import { AuthService } from 'src/auth/auth.service';
 import { SigninDto } from './dto/signin.dto';
 import { SignupDto } from './dto/signup.dto';
 import { User } from './models/users.model';
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -25,6 +25,7 @@ export class UsersService {
     signinDto: SigninDto,
   ): Promise<{ name: string; jwtToken: string; email: string }> {
     const user = await this.findByEmail(signinDto.email);
+
     const match = await this.checkPassword(signinDto.password, user);
 
     if (!match) {
